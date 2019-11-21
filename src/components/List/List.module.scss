@@ -1,0 +1,13 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: -20px 0;
+  width: 100%;
+  &Item {
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+}
