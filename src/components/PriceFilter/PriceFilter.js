@@ -1,44 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Discount from 'csssr-school-input-discount';
+import Title from '../Title/Title';
+import InputNumber from '../InputNumber/InputNumber'
+import inputHOC from '../../containers/inputHOC'
+
 import s from './PriceFilter.module.scss'
-import Title from "../Title/Title";
+import logRenderComponent from '../../containers/logRenderComponent';
+
+const HoccedDiscount = inputHOC(Discount);
 
 class PriceFilter extends React.Component {
-    constructor({props}) {
-        super(props);
-        this.filterMinPrice = React.createRef();
-        this.filterMaxPrice = React.createRef();
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.props.priceFilterData(this.filterMinPrice.current.value, this.filterMaxPrice.current.value);
-    };
 
     render() {
-        const {maxPrice, minPrice} = this.props;
-
+        const {
+            maxPrice,
+            minPrice,
+            discount,
+            handleChangeMinPrice,
+            handleChangeMaxPrice,
+            handleChangeDiscount
+        } = this.props;
         return (
-            <form className={s.filter} onSubmit={this.handleSubmit}>
+            <form className={s.filter}>
                 <Title>Цена</Title>
                 <div className={s.filterRow}>
                     <div className={s.filterItem}>
-                        от <input type="text" defaultValue={minPrice} ref={this.filterMinPrice}/>
+                        от
+                        <InputNumber
+                            value={minPrice}
+                            onChange={handleChangeMinPrice}
+                        />
                     </div>
                     <div className={s.filterItem}>
-                        до <input type="text" defaultValue={maxPrice} ref={this.filterMaxPrice}/>
+                        до
+                        <InputNumber
+                            value={maxPrice}
+                            onChange={handleChangeMaxPrice}
+                        />
                     </div>
                 </div>
-                <button type="submit" className={s.filterSubmit}><span>Применить</span></button>
+                <HoccedDiscount
+                    title="Скидка"
+                    name="sale"
+                    value={discount}
+                    onChange={handleChangeDiscount}
+                />
             </form>
 
         )
     }
-};
+}
 
 PriceFilter.propTypes = {
     minPrice: PropTypes.number,
     maxPrice: PropTypes.number,
+    discount: PropTypes.number,
 };
 
-export default PriceFilter
+export default logRenderComponent(PriceFilter);
