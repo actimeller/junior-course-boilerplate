@@ -7,11 +7,12 @@ import RatingComponent from '../RatingComponent/RatingComponent';
 import s from './List.module.scss';
 
 class List extends React.Component {
-
+    
     render() {
         const {data} = this.props;
         if (data.length > 0) {
             return (
+                <>
                 <ul className={s.list}>
                     {data.map((item) => {
                         return (
@@ -30,6 +31,7 @@ class List extends React.Component {
                         )
                     })}
                 </ul>
+                </>
             )
         } else {
             return (
