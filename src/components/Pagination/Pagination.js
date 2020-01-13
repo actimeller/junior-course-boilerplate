@@ -2,62 +2,67 @@ import React from 'react';
 
 import cx from 'classnames';
 import s from './Pagination.module.scss'
+import {Link} from 'react-router-dom';
+
 
 const Pagination = props => {
+    const {router, resetPagination, paginationLength} = props;
 
-    const {data, itemsPerPage, paginationActivePage, changePaginationActive} = props;
-
-    const handleChange = (value) => {
-
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set('page', value);
-
-        window.history.pushState(
-            {...window.history.state, paginationActive: value},
-            'pagination',
-            '?' + searchParams.toString());
-        changePaginationActive(value)
+    const paginationActivePage = +router.location.query.page || 1;
+    const searchParams = new URLSearchParams(router.location.search);
+    const getPaginationSearchLink = (page) => {
+        searchParams.set('page', page);
+        return {
+            search: searchParams.toString()
+        }
     };
 
-    const paginationLength = Math.ceil(data.length / itemsPerPage);
-
     if (paginationActivePage > paginationLength) {
-        handleChange(1);
+        searchParams.delete('page');
+        resetPagination('?' + searchParams.toString());
+        return false;
     }
 
-    if (data.length > 0) {
+    if (paginationLength > 0) {
         return (
+
             <ul className={s.Pagination}>
                 <li className={cx(s.PaginationItem, s.PaginationItemPrev)}>
-                    <button type="button"
-                            disabled={+paginationActivePage === 1}
-                            className={s.PaginationButton}
-                            onClick={() => handleChange(+paginationActivePage - 1)}>
+                    <Link disabled={+paginationActivePage === 1}
+                          className={cx(s.PaginationButton, {[s.PaginationButtonDisabled]: paginationActivePage === 1})}
+                          to={getPaginationSearchLink(paginationActivePage - 1)}
+                    >
                         Назад
-                    </button>
+                    </Link>
                 </li>
 
                 {[...Array(paginationLength)].map((item, key) => (
                     <li className={cx(s.PaginationItem, {[s.PaginationItemActive]: key + 1 === +paginationActivePage})} key={key}>
-                        <button type="button" className={s.PaginationButton} onClick={() => handleChange(key + 1)}>{key + 1}</button>
+                        <Link className={s.PaginationButton}
+                              to={getPaginationSearchLink(+key + 1)}>
+                            {key + 1}
+                        </Link>
                     </li>
                 ))}
 
 
                 <li className={cx(s.PaginationItem, s.PaginationItemNext)}>
-                    <button type="button"
-                            disabled={+paginationActivePage === paginationLength}
-                            className={s.PaginationButton}
-                            onClick={() => handleChange(+paginationActivePage + 1)}>
+                    <Link disabled={+paginationActivePage === paginationLength}
+                          className={cx(s.PaginationButton, {[s.PaginationButtonDisabled]: paginationActivePage === paginationLength})}
+                          to={getPaginationSearchLink(paginationActivePage + 1)}
+                    >
                         Вперед
-                    </button>
+                    </Link>
                 </li>
             </ul>
         )
-    } else {
-        return false
     }
-}
+
+    else {
+        return false;
+    }
+
+};
 
 
 export default Pagination;

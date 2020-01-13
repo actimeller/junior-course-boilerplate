@@ -1,24 +1,22 @@
 import {connect} from 'react-redux';
-import {paginationActions} from '../store/pagination';
 import Pagination from '../components/Pagination/Pagination';
-import {getFilteredData} from '../utils/getData';
-import data from '../products';
+import {getFilteredProducts} from '../utils/getFilteredProducts';
+import {push} from 'connected-react-router';
+import {splitEvery} from 'csssr-school-utils';
 
-const mapStateToProps = ({pagination, filter}) => ({
-    ...filter,
-    ...pagination,
-    data: getFilteredData({
-        data: data,
+const mapStateToProps = ({filter, pagination, router, data}) => ({
+    router,
+    paginationLength: splitEvery(pagination.itemsPerPage, getFilteredProducts({
         ...filter,
-        ...pagination
-    })
+        selectedCategories: router.location.query.category,
+        products: data.products,
+    })).length
 });
 
 const mapDispatchToProps = (dispatch) => ({
-
-    changePaginationActive: (value) => dispatch(paginationActions.changePaginationPage(value)),
-
+    resetPagination: (value) => dispatch(push(value))
 });
+
 
 const PaginationContainer = connect(mapStateToProps, mapDispatchToProps)(Pagination);
 
