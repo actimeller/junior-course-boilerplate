@@ -6,40 +6,32 @@ import logRenderComponent from '../../HOC/logRenderComponent';
 import RatingComponent from '../RatingComponent/RatingComponent';
 import s from './List.module.scss';
 import {Link} from 'react-router-dom';
-import iconBack from '../../assets/images/icon-back.svg';
 import Title from '../Title/Title';
 import planetPicture from '../../assets/images/ill-planet.svg';
 
 class List extends React.Component {
     constructor() {
         super();
-        this.state = {
-            isLoading: true,
-            isError: false,
-            products: []
-        }
     }
 
     fetchProducts = (url) => {
         this.props.loadProductsStart();
 
-        setTimeout(() => {
-            fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        return response.json()
-                    } else {
-                        this.props.loadProductsFail(response.message);
-                    }
-                })
-                .then(response => {
-                    this.props.loadProductsSuccess(response.products);
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    this.props.loadProductsFail(response.message);
+                }
+            })
+            .then(response => {
+                this.props.loadProductsSuccess(response.products);
 
-                })
-                .catch(error => {
-                    this.props.loadProductsFail(error.message);
-                })
-        }, 1000)
+            })
+            .catch(error => {
+                this.props.loadProductsFail(error.message);
+            })
     };
 
     componentDidMount() {

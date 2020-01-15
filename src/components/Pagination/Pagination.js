@@ -63,7 +63,7 @@ class Pagination extends React.Component {
                 </ul>
             )
         } else {
-            return false;
+            return null;
         }
     }
 

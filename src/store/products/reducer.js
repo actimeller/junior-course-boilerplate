@@ -9,9 +9,17 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LOAD_PRODUCTS_START:
-            return {...state, isLoading: true, isError: false};
+            return {
+                ...state,
+                isLoading: true,
+                isError: false
+            };
         case types.LOAD_PRODUCTS_FAIL:
-            return {...state, isLoading: false, isError: true};
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            };
         case types.LOAD_PRODUCTS_SUCCESS:
             return {
                 ...state,

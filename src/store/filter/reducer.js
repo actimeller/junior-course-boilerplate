@@ -22,11 +22,20 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case types.CHANGE_MIN_PRICE :
-            return {...state, minPrice: action.payload};
+            return {
+                ...state,
+                minPrice: action.payload
+            };
         case types.CHANGE_MAX_PRICE :
-            return {...state, maxPrice: action.payload};
+            return {
+                ...state,
+                maxPrice: action.payload
+            };
         case types.CHANGE_DISCOUNT :
-            return {...state, discount: action.payload};
+            return {
+                ...state,
+                discount: action.payload
+            };
         case types.RESET_FILTERS :
             return {
                 ...state,
