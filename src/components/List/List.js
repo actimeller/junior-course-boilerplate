@@ -6,6 +6,9 @@ import logRenderComponent from '../../HOC/logRenderComponent';
 import RatingComponent from '../RatingComponent/RatingComponent';
 import s from './List.module.scss';
 import {Link} from 'react-router-dom';
+import iconBack from '../../assets/images/icon-back.svg';
+import Title from '../Title/Title';
+import planetPicture from '../../assets/images/ill-planet.svg';
 
 class List extends React.Component {
     constructor() {
@@ -92,8 +95,9 @@ class List extends React.Component {
             )
         } else {
             return (
-                <div>
-
+                <div className={s.listEmpty}>
+                    <Title>Товары не найдены</Title>
+                    <img src={planetPicture} alt="Товар не найден"/>
                 </div>
             )
         }
