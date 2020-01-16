@@ -1,29 +1,12 @@
+import React from 'react';
+
 import {connect} from 'react-redux';
-import List from '../components/List/List';
 import {getFilteredProducts} from '../utils/getFilteredProducts';
 import {withRouter} from 'react-router';
 import {productsActions} from '../store/products';
+import List from '../components/List/List';
+import {splitEvery} from 'csssr-school-utils';
 
-
-const fetchProducts = (url) => {
-    this.props.loadProductsStart();
-
-    fetch(url)
-        .then(response => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                this.props.loadProductsFail(response.message);
-            }
-        })
-        .then(response => {
-            this.props.loadProductsSuccess(response.products);
-
-        })
-        .catch(error => {
-            this.props.loadProductsFail(error.message);
-        })
-};
 
 const mapStateToProps = ({filter, pagination, router, data}) => ({
     router,
@@ -43,6 +26,47 @@ const mapDispatchToProps = (dispatch) => ({
     loadProductsFail: (value) => dispatch(productsActions.loadProductsFail(value)),
 });
 
-const ListContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(List));
+class ListContainer extends React.Component {
 
-export default ListContainer;
+    fetchProducts = (url) => {
+        this.props.loadProductsStart();
+
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    this.props.loadProductsFail(response.message);
+                }
+            })
+            .then(response => {
+                this.props.loadProductsSuccess(response.products);
+
+            })
+            .catch(error => {
+                this.props.loadProductsFail(error.message);
+            })
+    };
+
+    componentDidMount() {
+        this.fetchProducts('https://course-api.csssr.school/products')
+    }
+
+    render() {
+        const {products, router, itemsPerPage, isLoading} = this.props;
+
+        const paginationActivePage = router.location.query.page || 1;
+        const activePageProducts = splitEvery(itemsPerPage, products)[paginationActivePage - 1] || [];
+
+        return (
+            <List
+                isLoading={isLoading}
+                products={activePageProducts}
+                itemsPerPage={itemsPerPage}
+            />
+        )
+    }
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListContainer));

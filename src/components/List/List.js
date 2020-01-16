@@ -1,48 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProductItem from 'csssr-school-product-card';
-import {formatMoney, splitEvery} from 'csssr-school-utils'
 import logRenderComponent from '../../HOC/logRenderComponent';
-import RatingComponent from '../RatingComponent/RatingComponent';
 import s from './List.module.scss';
 import {Link} from 'react-router-dom';
 import Title from '../Title/Title';
 import planetPicture from '../../assets/images/ill-planet.svg';
 
 class List extends React.Component {
-    constructor() {
-        super();
-    }
-
-    fetchProducts = (url) => {
-        this.props.loadProductsStart();
-
-        fetch(url)
-            .then(response => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    this.props.loadProductsFail(response.message);
-                }
-            })
-            .then(response => {
-                this.props.loadProductsSuccess(response.products);
-
-            })
-            .catch(error => {
-                this.props.loadProductsFail(error.message);
-            })
-    };
-
-    componentDidMount() {
-        this.fetchProducts('https://course-api.csssr.school/products')
-    }
 
     render() {
-        const {products, router, itemsPerPage, isLoading} = this.props;
-
-        const paginationActivePage = router.location.query.page || 1;
-        const activePageProducts = splitEvery(itemsPerPage, products)[paginationActivePage - 1] || [];
+        const {products, isLoading, itemsPerPage} = this.props;
 
         if (isLoading) {
             return (
@@ -61,24 +28,14 @@ class List extends React.Component {
                     ))}
                 </ul>
             )
-        } else if (activePageProducts.length > 0) {
+        } else if (products.length > 0) {
             return (
                 <ul className={s.list}>
-                    {activePageProducts.map((item) => {
+                    {products.map((item) => {
                         return (
                             <li className={s.listItem} key={item.id}>
                                 <Link to={`products/${item.id}`}>
 
-                                    <ProductItem
-                                        isInStock={item.isInStock}
-                                        img={item.imgUrl}
-                                        title={item.name}
-                                        price={formatMoney(item.price, 0, '.', ' ')}
-                                        subPriceContent=""
-                                        maxRating={5}
-                                        rating={item.rating}
-                                        ratingComponent={RatingComponent}
-                                    />
                                 </Link>
                             </li>
                         )
@@ -97,11 +54,10 @@ class List extends React.Component {
 }
 
 List.propTypes = {
-    products: PropTypes.array
+    products: PropTypes.array,
+    isLoading: PropTypes.bool,
+    itemsPerPage: PropTypes.number,
 };
 
-List.defaultProps = {
-    products: []
-};
 
 export default logRenderComponent(List);
