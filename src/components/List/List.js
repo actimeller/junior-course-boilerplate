@@ -5,25 +5,18 @@ import s from './List.module.scss';
 import {Link} from 'react-router-dom';
 import Title from '../Title/Title';
 import planetPicture from '../../assets/images/ill-planet.svg';
+import ProductItemWrapper from '../ProductItemWrapper/ProductItemWrapper';
 
 class List extends React.Component {
 
     render() {
         const {products, isLoading, itemsPerPage} = this.props;
-
         if (isLoading) {
             return (
                 <ul className={s.list}>
                     {[...Array(itemsPerPage)].map((item, key) => (
                         <li className={s.listItem} key={key}>
-                            <div className={s.listItemLoading}>
-                                <span className={s.listItemLoadingPhoto}></span>
-                                <span className={s.listItemLoadingText}>
-                                    <i></i>
-                                    <i></i>
-                                    <i></i>
-                                </span>
-                            </div>
+                            <ProductItemWrapper item={item} isLoading={isLoading}/>
                         </li>
                     ))}
                 </ul>
@@ -35,7 +28,7 @@ class List extends React.Component {
                         return (
                             <li className={s.listItem} key={item.id}>
                                 <Link to={`products/${item.id}`}>
-
+                                    <ProductItemWrapper item={item} isLoading={isLoading}/>
                                 </Link>
                             </li>
                         )

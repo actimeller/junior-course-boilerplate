@@ -7,7 +7,6 @@ import {productsActions} from '../store/products';
 import List from '../components/List/List';
 import {splitEvery} from 'csssr-school-utils';
 
-
 const mapStateToProps = ({filter, pagination, router, data}) => ({
     router,
     itemsPerPage: pagination.itemsPerPage,
@@ -69,4 +68,5 @@ class ListContainer extends React.Component {
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListContainer) );
+
