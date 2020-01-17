@@ -21,7 +21,7 @@ class List extends React.Component {
                     ))}
                 </ul>
             )
-        } else if (products.length > 0) {
+        } else {
             return (
                 <ul className={s.list}>
                     {products.map((item) => {
@@ -34,13 +34,6 @@ class List extends React.Component {
                         )
                     })}
                 </ul>
-            )
-        } else {
-            return (
-                <div className={s.listEmpty}>
-                    <Title>Товары не найдены</Title>
-                    <img src={planetPicture} alt="Товар не найден"/>
-                </div>
             )
         }
     }

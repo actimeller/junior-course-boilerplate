@@ -1,11 +1,12 @@
 import React from 'react';
-
 import {connect} from 'react-redux';
-import {getFilteredProducts} from '../utils/getFilteredProducts';
-import {withRouter} from 'react-router';
-import {productsActions} from '../store/products';
 import List from '../components/List/List';
+import ListEmpty from '../components/ListEmpty/ListEmpty';
 import {splitEvery} from 'csssr-school-utils';
+import {getFilteredProducts} from '../utils/getFilteredProducts';
+import {productsActions} from '../store/products';
+import {withRouter} from 'react-router';
+
 
 const mapStateToProps = ({filter, pagination, router, data}) => ({
     router,
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class ListContainer extends React.Component {
+    componentDidMount() {
+        this.fetchProducts('https://course-api.csssr.school/products')
+    }
 
     fetchProducts = (url) => {
         this.props.loadProductsStart();
@@ -47,26 +51,28 @@ class ListContainer extends React.Component {
             })
     };
 
-    componentDidMount() {
-        this.fetchProducts('https://course-api.csssr.school/products')
-    }
-
     render() {
         const {products, router, itemsPerPage, isLoading} = this.props;
 
         const paginationActivePage = router.location.query.page || 1;
         const activePageProducts = splitEvery(itemsPerPage, products)[paginationActivePage - 1] || [];
 
-        return (
-            <List
-                isLoading={isLoading}
-                products={activePageProducts}
-                itemsPerPage={itemsPerPage}
-            />
-        )
+        if (!isLoading && activePageProducts < 1) {
+            return (
+                <ListEmpty/>
+            )
+        } else {
+            return (
+                <List
+                    isLoading={isLoading}
+                    products={activePageProducts}
+                    itemsPerPage={itemsPerPage}
+                />
+            )
+        }
     }
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListContainer) );
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListContainer));
 
