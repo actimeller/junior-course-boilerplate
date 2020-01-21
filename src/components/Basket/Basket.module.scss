@@ -1,0 +1,30 @@
+.Basket {
+  &Header {
+    display: flex;
+    align-items: baseline;
+    margin: 0 0 25px;
+
+    img {
+      align-self: center;
+    }
+
+    h1 {
+      margin: 0 10px;
+    }
+  }
+
+  &Controls {
+    width: 100%;
+  }
+
+  &Button {
+    border: 2px solid #323C48;
+    color: #323C48;
+    text-align: center;
+    line-height: 32px;
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    text-decoration: none !important;
+  }
+}
