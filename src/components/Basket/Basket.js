@@ -33,7 +33,7 @@ class Basket extends React.Component {
 //         <div className={Basket}>
 //             <div className={s.BasketHeader}>
 //                 <img src={basketPicture} alt="Корзина"/>
-//                 <Title>Корзина</Title>
+//                 <NotFound>Корзина</NotFound>
 //                 <strong>{list.length}</strong>
 //             </div>
 //             <div className={s.BasketControls}>

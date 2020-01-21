@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router'
 
 import configureStore, {history} from './store'
 import Products from './pages/Products/Products';
+import NotFound from './pages/NotFound/NotFound';
 import DetailContainer from './containers/DetailContainer';
 
 import './index.scss';
@@ -17,8 +18,11 @@ class App extends React.Component {
         return (
             <ConnectedRouter history={history}>
                 <div className="App">
-                    <Route exact path="/" component={Products}/>
-                    <Route path="/products/:id" component={DetailContainer}/>
+                    <Switch>
+                        <Route exact path="/" component={Products}/>
+                        <Route path="/products/:id" component={DetailContainer}/>
+                        <Route component={NotFound} />
+                    </Switch>
                 </div>
             </ConnectedRouter>
         )
