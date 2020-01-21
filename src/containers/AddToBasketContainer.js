@@ -14,22 +14,22 @@ const mapDispatchToProps = (dispatch) => ({
 
 class AddToBasketContainer extends React.Component {
 
-    handleAddToBasket = (item) => {
-        this.props.handleAddToBasket(item)
+    handleAddToBasket = (id) => {
+        this.props.handleAddToBasket(id)
     };
-    handleRemoveFromBasket = (item) => {
-        this.props.handleRemoveFromBasket(item)
+    handleRemoveFromBasket = (id) => {
+        this.props.handleRemoveFromBasket(id)
     };
 
     render() {
         const {list, item, handleAddToBasket, handleRemoveFromBasket} = this.props;
-        if (!list.includes(item)) {
+        if (!list.includes(item.id)) {
             return (
-                <AddToBasket handleClick={this.handleAddToBasket} item={item}>Добавить</AddToBasket>
+                <AddToBasket handleClick={this.handleAddToBasket} item={item.id}>Добавить</AddToBasket>
             )
         } else {
             return (
-                <AddToBasket handleClick={this.handleRemoveFromBasket} item={item}>Удалить</AddToBasket>
+                <AddToBasket handleClick={this.handleRemoveFromBasket} item={item.id}>Удалить</AddToBasket>
             )
         }
 

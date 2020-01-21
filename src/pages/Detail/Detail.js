@@ -1,35 +1,39 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import ProductItem from 'csssr-school-product-card';
-import {formatMoney} from 'csssr-school-utils';
-import RatingComponent from '../../components/RatingComponent/RatingComponent';
-import products from '../../products.json';
 import Title from '../../components/Title/Title';
 import {Link} from 'react-router-dom';
 
 import iconBack from '../../assets/images/icon-back.svg'
 import planetPicture from '../../assets/images/ill-planet.svg'
 import s from './Detail.module.scss'
+import AddToBasketContainer from '../../containers/AddToBasketContainer';
+import ProductItemWrapper from '../../components/ProductItemWrapper/ProductItemWrapper';
 
+// </div>
 class Detail extends React.Component {
     render() {
-        const item = products[+this.props.match.params.id - 1];
-        if (item) {
+        const {item, isLoading} = this.props;
+        if (isLoading) {
             return (
-                <div>
+                <div className={s.Detail}>
+                    <div className={s.DetailTitle}>
+                        <Link to="/"><img src={iconBack} alt="Назад"/></Link>
+                    </div>
+                    <div className={s.DetailBody}>
+                        <ProductItemWrapper item={item} isLoading={isLoading}/>
+                    </div>
+                </div>
+            )
+        } else if (item) {
+            return (
+                <div className={s.Detail}>
                     <div className={s.DetailTitle}>
                         <Link to="/"><img src={iconBack} alt="Назад"/></Link><Title>{item.name}</Title>
                     </div>
-                    <ProductItem
-                        isInStock={item.isInStock}
-                        img={item.imgUrl}
-                        title={item.name}
-                        price={formatMoney(item.price, 0, '.', ' ')}
-                        subPriceContent=""
-                        maxRating={5}
-                        rating={item.rating}
-                        ratingComponent={RatingComponent}
-                    />
+                    <div className={s.DetailBody}>
+                        <ProductItemWrapper item={item} isLoading={isLoading}/>
+                        <AddToBasketContainer item={item}/>
+                    </div>
                 </div>
             )
         } else {

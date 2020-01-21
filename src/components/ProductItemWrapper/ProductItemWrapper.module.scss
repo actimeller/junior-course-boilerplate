@@ -1,6 +1,7 @@
 .productItemWrapper {
   &Loading {
     width: 100%;
+    min-width: 220px;
     margin: 16px;
     &Photo {
       background: #F5F6FA;
