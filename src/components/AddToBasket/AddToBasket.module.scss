@@ -9,4 +9,33 @@
   text-decoration: none !important;
   margin: 20px 0;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  &Loading {
+    text-indent: -999px;
+    &:after {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 16px;
+      margin: -10px;
+      padding: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border: 2px solid;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-radius: 50%;
+      color: #000;
+      background-color: transparent;
+      animation: loader 0.9s linear infinite;
+      z-index: 99;
+      @keyframes loader {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
 }
