@@ -9,7 +9,6 @@ import s from './Detail.module.scss'
 import AddToBasketContainer from '../../containers/AddToBasketContainer';
 import ProductItemWrapper from '../../components/ProductItemWrapper/ProductItemWrapper';
 
-// </div>
 class Detail extends React.Component {
     render() {
         const {item, isLoading} = this.props;

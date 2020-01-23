@@ -5,25 +5,6 @@ import {productsActions} from '../store/products';
 import {withRouter} from 'react-router';
 import Detail from '../pages/Detail/Detail';
 
-
-const mapStateToProps = ({filter, pagination, router, data}) => ({
-    router,
-    itemsPerPage: pagination.itemsPerPage,
-    isLoading: data.isLoading,
-    isError: false.isError,
-    products: getFilteredProducts({
-        ...filter,
-        selectedCategories: router.location.query.category,
-        products: data.products,
-    })
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    loadProductsStart: () => dispatch(productsActions.loadProductsStart()),
-    loadProductsSuccess: (value) => dispatch(productsActions.loadProductsSuccess(value)),
-    loadProductsFail: (value) => dispatch(productsActions.loadProductsFail(value)),
-});
-
 class DetailContainer extends React.Component {
     componentDidMount() {
         this.fetchProducts('https://course-api.csssr.school/products')
@@ -50,7 +31,7 @@ class DetailContainer extends React.Component {
     };
 
     render() {
-        const {products, router, isLoading, match} = this.props;
+        const {products, isLoading} = this.props;
 
         const item = products[+this.props.match.params.id - 1];
         return (
@@ -62,6 +43,20 @@ class DetailContainer extends React.Component {
     }
 }
 
+const mapStateToProps = ({filter, pagination, router, data}) => ({
+    isLoading: data.isLoading,
+    products: getFilteredProducts({
+        ...filter,
+        selectedCategories: router.location.query.category,
+        products: data.products,
+    })
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    loadProductsStart: () => dispatch(productsActions.loadProductsStart()),
+    loadProductsSuccess: (value) => dispatch(productsActions.loadProductsSuccess(value)),
+    loadProductsFail: (value) => dispatch(productsActions.loadProductsFail(value)),
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DetailContainer));
 

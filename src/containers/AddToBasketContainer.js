@@ -1,19 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {basketActions} from '../store/basket';
-import AddToBasket from '../components/AddToBasket/AddToBasket';
+import Button from '../components/Button/Button';
 
-const mapStateToProps = ({basket}) => ({
-    list: basket.list,
-    isLoading: basket.isLoading
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    handleAddToBasket: (value) => dispatch(basketActions.addToBasket(value)),
-    handleRemoveFromBasket: (value) => dispatch(basketActions.removeFromBasket(value)),
-    loadBasketStart: () => dispatch(basketActions.loadBasketStart()),
-    loadBasketFail: () => dispatch(basketActions.loadBasketFail()),
-});
 
 class AddToBasketContainer extends React.Component {
 
@@ -36,7 +25,8 @@ class AddToBasketContainer extends React.Component {
         })
     };
 
-    handleAddToBasket = (id) => {
+    handleAddToBasket = () => {
+        const {id} = this.props.item;
         this.fetchBasket('https://course-api.csssr.school/save', id)
             .then(data => {
                 this.props.handleAddToBasket(id)
@@ -45,7 +35,8 @@ class AddToBasketContainer extends React.Component {
                 this.props.loadBasketFail(error.message);
             });
     };
-    handleRemoveFromBasket = (id) => {
+    handleRemoveFromBasket = () => {
+        const {id} = this.props.item;
         this.fetchBasket('https://course-api.csssr.school/save', id)
             .then(data => {
                 this.props.handleRemoveFromBasket(id)
@@ -56,20 +47,31 @@ class AddToBasketContainer extends React.Component {
     };
 
     render() {
-        const {list, item, handleAddToBasket, handleRemoveFromBasket, isLoading} = this.props;
+        const {list, item, isLoading} = this.props;
         if (!list.includes(item.id)) {
             return (
-                <AddToBasket handleClick={this.handleAddToBasket} item={item.id} isLoading={isLoading}>Добавить</AddToBasket>
+                <Button handleClick={this.handleAddToBasket} isLoading={isLoading}>Добавить</Button>
             )
         } else {
             return (
-                <AddToBasket handleClick={this.handleRemoveFromBasket} item={item.id} isLoading={isLoading}>Убрать</AddToBasket>
+                <Button handleClick={this.handleRemoveFromBasket} isLoading={isLoading}>Убрать</Button>
             )
         }
 
     }
 }
 
+const mapStateToProps = ({basket}) => ({
+    list: basket.list,
+    isLoading: basket.isLoading
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    handleAddToBasket: (value) => dispatch(basketActions.addToBasket(value)),
+    handleRemoveFromBasket: (value) => dispatch(basketActions.removeFromBasket(value)),
+    loadBasketStart: () => dispatch(basketActions.loadBasketStart()),
+    loadBasketFail: () => dispatch(basketActions.loadBasketFail()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddToBasketContainer);
 
