@@ -1,28 +1,22 @@
 import * as types from './types';
 
-export const loadBasketStart = () => {
+export const saveBasketStart = () => {
     return {
-        type: types.LOAD_BASKET_START
+        type: types.SAVE_BASKET_START
     }
 };
 
-export const loadProBasketSuccess = (value) => {
+export const saveBasketSuccess = (value) => {
     return {
-        type: types.LOAD_BASKET_SUCCESS,
+        type: types.SAVE_BASKET_SUCCESS,
         payload: value
     }
 };
 
-export const loadBasketFail = (value) => {
+export const saveBasketFail = (value) => {
     return {
-        type: types.LOAD_BASKET_FAIL,
+        type: types.SAVE_BASKET_FAIL,
         payload: value
-    }
-};
-
-export const resetBasket = () => {
-    return {
-        type: types.RESET_BASKET
     }
 };
 
@@ -40,3 +34,8 @@ export const removeFromBasket = (value) => {
     }
 };
 
+export const resetBasket = () => {
+    return {
+        type: types.RESET_BASKET
+    }
+};

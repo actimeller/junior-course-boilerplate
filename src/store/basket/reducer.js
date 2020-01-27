@@ -3,33 +3,38 @@ import * as types from './types';
 const initialState = {
     list: [],
     isLoading: false,
+    isSaved: true,
     isError: false
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case types.LOAD_BASKET_START:
+        case types.SAVE_BASKET_START:
             return {
                 ...state,
                 isLoading: true,
+                isSaved: false,
                 isError: false
             };
-        case types.LOAD_BASKET_FAIL:
+        case types.SAVE_BASKET_FAIL:
             return {
                 ...state,
                 isLoading: false,
+                isSaved: false,
                 isError: true
             };
-        case types.LOAD_BASKET_SUCCESS:
+        case types.SAVE_BASKET_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
+                isSaved: true,
                 isError: false,
             };
         case types.ADD_TO_BASKET :
             return {
                 ...state,
                 isLoading: false,
+                isSaved: false,
                 isError: false,
                 list: Array.from(new Set([...state.list, action.payload]))
             };
@@ -37,6 +42,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
+                isSaved: false,
                 isError: false,
                 list: state.list.filter(item => item !== action.payload)
             };

@@ -1,4 +1,6 @@
 .Basket {
+  position: relative;
+
   &Header {
     display: flex;
     align-items: baseline;
@@ -17,14 +19,8 @@
     width: 100%;
   }
 
-  &Button {
-    border: 2px solid #323C48;
-    color: #323C48;
-    text-align: center;
-    line-height: 32px;
-    width: 100%;
-    display: block;
-    font-size: 14px;
-    text-decoration: none !important;
+
+  &Check {
+    margin-left: 20px;
   }
 }
