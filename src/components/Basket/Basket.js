@@ -13,11 +13,8 @@ const Basket = ({list, isLoading, isSaved, isError, handleResetBasket, handleSav
                 <img src={basketPicture} alt="Корзина"/>
                 <Title>Корзина</Title>
                 <strong>{list.length}</strong>
-                {
-                    isSaved ? <img className={s.BasketCheck} src={checkPicture} alt="Saved"/> :
-                        isError ? 'Произошла ошибка' :
-                            ''
-                }
+                {isSaved && <img className={s.BasketCheck} src={checkPicture} alt="Saved"/>}
+                {isError && 'Произошла ошибка'}
             </div>
             <div className={s.BasketControls}>
                 {!isSaved && <Button handleClick={handleSaveBasket} isLoading={isLoading}>Сохранить</Button>}
