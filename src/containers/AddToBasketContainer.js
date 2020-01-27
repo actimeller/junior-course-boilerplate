@@ -13,15 +13,11 @@ class AddToBasketContainer extends React.Component {
 
     render() {
         const {list, item} = this.props;
-        if (!list.includes(item)) {
-            return (
-                <Button handleClick={this.handleAddToBasket}>Добавить</Button>
-            )
-        } else {
-            return (
-                <Button handleClick={this.handleRemoveFromBasket}>Убрать</Button>
-            )
-        }
+        return (
+            list.includes(item)
+                ? <Button handleClick={this.handleRemoveFromBasket}>Убрать</Button>
+                : <Button handleClick={this.handleAddToBasket}>Добавить</Button>
+        )
     }
 }
 
