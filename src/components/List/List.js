@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import logRenderComponent from '../../HOC/logRenderComponent';
 import s from './List.module.scss';
 import {Link} from 'react-router-dom';
-import Title from '../Title/Title';
-import planetPicture from '../../assets/images/ill-planet.svg';
 import ProductItemWrapper from '../ProductItemWrapper/ProductItemWrapper';
+import AddToBasketContainer from '../../containers/AddToBasketContainer';
 
 class List extends React.Component {
 
@@ -16,7 +15,9 @@ class List extends React.Component {
                 <ul className={s.list}>
                     {[...Array(itemsPerPage)].map((item, key) => (
                         <li className={s.listItem} key={key}>
-                            <ProductItemWrapper item={item} isLoading={isLoading}/>
+                            <div>
+                                <ProductItemWrapper item={item} isLoading={isLoading}/>
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -27,9 +28,12 @@ class List extends React.Component {
                     {products.map((item) => {
                         return (
                             <li className={s.listItem} key={item.id}>
-                                <Link to={`products/${item.id}`}>
-                                    <ProductItemWrapper item={item} isLoading={isLoading}/>
-                                </Link>
+                                <div>
+                                    <Link to={`products/${item.id}`}>
+                                        <ProductItemWrapper item={item} isLoading={isLoading}/>
+                                    </Link>
+                                    <AddToBasketContainer item={item}/>
+                                </div>
                             </li>
                         )
                     })}

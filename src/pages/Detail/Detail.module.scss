@@ -13,6 +13,10 @@
     }
   }
 
+  &Body {
+    display: inline-block;
+  }
+
   &Empty {
     display: flex;
     flex-direction: column;

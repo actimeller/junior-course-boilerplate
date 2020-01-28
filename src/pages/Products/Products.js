@@ -4,6 +4,7 @@ import Title from '../../components/Title/Title';
 import ListContainer from '../../containers/ListContainer';
 import FilterContainer from '../../containers/FilterContainer';
 import PaginationContainer from '../../containers/PaginationContainer';
+import BasketContainer from '../../containers/BasketContainer';
 
 export const Products = () => {
     return (
@@ -19,6 +20,9 @@ export const Products = () => {
                     <ListContainer/>
                     <PaginationContainer/>
                 </main>
+                <aside className="AppBasket">
+                    <BasketContainer/>
+                </aside>
             </div>
         </div>
     );
