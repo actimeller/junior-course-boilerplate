@@ -13,6 +13,14 @@
     h1 {
       margin: 0 10px;
     }
+
+    a {
+      color: #000;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 
   &Controls {
@@ -22,5 +30,17 @@
 
   &Check {
     margin-left: 20px;
+  }
+
+  &Body {
+    div {
+      margin: 10px 0;
+      display: flex;
+    }
+
+    label {
+      font-weight: bold;
+      width: 100px;
+    }
   }
 }
