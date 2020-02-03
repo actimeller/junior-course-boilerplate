@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import List from '../components/List/List';
 import ListEmpty from '../components/ListEmpty/ListEmpty';
-import {getFilteredProducts} from '../utils/getFilteredProducts';
 import {productsActions} from '../store/products';
 import {withRouter} from 'react-router';
 
@@ -16,15 +15,10 @@ class BasketListContainer extends React.Component {
 
         fetch(url)
             .then(response => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    this.props.loadProductsFail(response.message);
-                }
+                return response.json()
             })
             .then(response => {
                 this.props.loadProductsSuccess(response.products);
-
             })
             .catch(error => {
                 this.props.loadProductsFail(error.message);
