@@ -1,11 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getFilteredProducts} from '../utils/getFilteredProducts';
+import List from '../components/List/List';
+import ListEmpty from '../components/ListEmpty/ListEmpty';
 import {productsActions} from '../store/products';
 import {withRouter} from 'react-router';
-import Detail from '../pages/Detail/Detail';
 
-class DetailContainer extends React.Component {
+class BasketListContainer extends React.Component {
     componentDidMount() {
         this.fetchProducts('https://course-api.csssr.school/products')
     }
@@ -19,7 +19,6 @@ class DetailContainer extends React.Component {
             })
             .then(response => {
                 this.props.loadProductsSuccess(response.products);
-
             })
             .catch(error => {
                 this.props.loadProductsFail(error.message);
@@ -29,23 +28,25 @@ class DetailContainer extends React.Component {
     render() {
         const {products, isLoading} = this.props;
 
-        const item = products[+this.props.match.params.id - 1];
-        return (
-            <Detail
-                isLoading={isLoading}
-                item={item}
-            />
-        )
+        if (!isLoading && products < 1) {
+            return (
+                <ListEmpty/>
+            )
+        } else {
+            return (
+                <List
+                    isLoading={isLoading}
+                    products={products}
+                />
+            )
+        }
     }
 }
 
-const mapStateToProps = ({filter, pagination, router, data}) => ({
+const mapStateToProps = ({filter, pagination, router, data, basket}) => ({
     isLoading: data.isLoading,
-    products: getFilteredProducts({
-        ...filter,
-        selectedCategories: router.location.query.category,
-        products: data.products,
-    })
+    isError: false.isError,
+    products: basket.list
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -54,5 +55,5 @@ const mapDispatchToProps = (dispatch) => ({
     loadProductsFail: (value) => dispatch(productsActions.loadProductsFail(value)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DetailContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BasketListContainer));
 

@@ -6,6 +6,7 @@ import {ConnectedRouter} from 'connected-react-router'
 
 import configureStore, {history} from './store'
 import Products from './pages/Products/Products';
+import Basket from './pages/Basket/Basket';
 import NotFound from './pages/NotFound/NotFound';
 import DetailContainer from './containers/DetailContainer';
 
@@ -21,6 +22,7 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/" component={Products}/>
                         <Route path="/products/:id" component={DetailContainer}/>
+                        <Route path="/basket" component={Basket}/>
                         <Route component={NotFound} />
                     </Switch>
                 </div>

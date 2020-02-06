@@ -36,11 +36,7 @@ class ListContainer extends React.Component {
 
         fetch(url)
             .then(response => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    this.props.loadProductsFail(response.message);
-                }
+                return response.json()
             })
             .then(response => {
                 this.props.loadProductsSuccess(response.products);
